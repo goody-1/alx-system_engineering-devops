@@ -1,2 +1,2 @@
 #!/bin/bash
-ls -1Ra ./ | wc -l
+find . -maxdepth 1 -type f | wc -l
