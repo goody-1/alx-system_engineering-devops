@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Stops 7-highlander
+
+process=$(pgrep -fl 'highlander' | awk '{print $2}')
+if [[ "" !=  "$process" ]]; then
+  pkill -9 "$process"
+fi
