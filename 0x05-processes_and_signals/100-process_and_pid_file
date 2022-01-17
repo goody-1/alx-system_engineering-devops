@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # creates the /var/run/myscript.pid containing its PID
 
-PID=$(echo $$)
+PID=$$
 echo "$PID" > "/var/run/myscript.pid"
 trap 'echo Y U no love me?!; kill -9 "$PID" ' SIGINT
-trap 'rm /var/run/myscript.pid; echo I hate the kill command; kill -9 "$PID" ' SIGTERM SIGQUIT
+trap 'echo I hate the kill command; rm /var/run/myscript.pid; kill -9 "$PID" ' SIGTERM SIGQUIT
 
 while :
 do
