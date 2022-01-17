@@ -4,8 +4,8 @@
 PID=$$
 echo "$PID" > "/var/run/myscript.pid"
 trap 'echo Y U no love me?!; kill -9 "$PID" ' SIGINT
-trap 'echo "I hate the kill command" ' SIGTERM
-trap 'rm /var/run/myscript.pid; kill -9 "$PID" ' SIGQUIT SIGTERM
+trap 'echo "I hate the kill command"; rm /var/run/myscript.pid; kill -9 "$PID" ' SIGTERM
+trap 'rm /var/run/myscript.pid; kill -9 "$PID" ' SIGQUIT
 
 while :
 do
