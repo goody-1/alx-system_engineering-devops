@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Stops 4-to_infinity_and_beyond
+
+# ps -ef | grep 'to_infinity' | grep -v grep | awk '{print $2}' | xargs kill
+
+PID=$(pgrep -f 'to_infinity')
+if [[ "" !=  "$PID" ]]; then
+  kill -9 "$PID"
+fi
