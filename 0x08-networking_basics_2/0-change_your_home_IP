@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# This script changes my home IP address
+
+HOST="localhost"
+IP="127.0.0.2"
+
+cp /etc/hosts ~/hosts.new
+
+sed -i "/$HOST/ s/.*/$IP\t$HOST/g" /etc/hosts
+echo -e "8.8.8.8\tfacebook.com" >> /etc/hosts
+
+cp -f ~/hosts.new /etc/hosts
