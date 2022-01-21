@@ -6,7 +6,7 @@ IP="127.0.0.2"
 
 cp /etc/hosts ~/hosts.new
 
-sed -i "/$HOST/ s/.*/$IP\t$HOST/g" /etc/hosts
-echo -e "8.8.8.8\tfacebook.com" >> /etc/hosts
+sed -i "/$HOST/ s/.*/$IP\t$HOST/g" ~/hosts.new
+echo -e "8.8.8.8\tfacebook.com" >> ~/hosts.new
 
 cp -f ~/hosts.new /etc/hosts
