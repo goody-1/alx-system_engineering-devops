@@ -1,4 +1,4 @@
-# DevOps Configuration Management Projects from ALX-SE
+# DevOps Configuration Management Project from ALX-SE
 
 | Filename            | Description                                    | Type |
 | ------------------- | ---------------------------------------------- | ------ |
