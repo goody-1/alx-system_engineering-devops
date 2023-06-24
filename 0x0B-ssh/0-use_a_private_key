@@ -1,2 +1,4 @@
 #!/usr/bin/env bash
+# A bash script that uses ssh to connect to yomyur server
+# using the private key ~/.ssh/school with the user ubuntu
 ssh -i ~/.ssh/school ubuntu@52.86.99.167
