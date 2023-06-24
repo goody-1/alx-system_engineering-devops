@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-ssh -i ~/.ssh/school -o PreferredAuthentications=publickey ubuntu@52.86.99.167
+ssh -i ~/.ssh/school ubuntu@52.86.99.167
