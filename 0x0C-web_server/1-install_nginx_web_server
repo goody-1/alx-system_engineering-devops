@@ -5,16 +5,16 @@
 apt update
 
 # Install Nginx
-apt install -y nginx
+sudo apt install -y nginx
 
 # Configure Nginx to listen on port 80
-sed -i 's/listen 80 default_server;/listen 80;/g' /etc/nginx/sites-available/default
+sudo sed -i 's/listen 80 default_server;/listen 80;/g' /etc/nginx/sites-available/default
 
 # Restart Nginx
-service nginx restart
+sudo service nginx restart
 
 # Create index.html file with "Hello World!" content
-bash -c 'echo "Hello World!" > /var/www/html/index.html'
+sudo bash -c 'echo "Hello World!" > /var/www/html/index.html'
 
 # Ensure correct ownership of index.html
-chown www-data:www-data /var/www/html/index.html
+sudo chown www-data:www-data /var/www/html/index.html
