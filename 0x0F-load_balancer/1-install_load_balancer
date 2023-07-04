@@ -3,91 +3,30 @@
 
 # Step 1: Install HAProxy
 sudo apt update
-sudo apt-get install --no-install-recommends software-properties-common
-sudo add-apt-repository ppa:vbernat/haproxy-2.8
+sudo apt-get install --no-install-recommends -y software-properties-common
+echo | sudo add-apt-repository ppa:vbernat/haproxy-2.8
 sudo apt-get install haproxy=2.8.\*
+sudo apt-get install -y haproxy
 
+DOMAIN_NAME='dhelped.tech'
 # Step 2: Configure HAProxy
-sudo tee /etc/haproxy/haproxy.cfg > /dev/null <<EOF
-global
-    daemon
-    maxconn 256
+sudo mkdir -p /etc/haproxy
+sudo tee -a /etc/haproxy/haproxy.cfg > /dev/null <<EOF
 
-defaults
-    mode http
-    timeout connect 5000ms
-    timeout client 50000ms
-    timeout server 50000ms
-
-frontend http-in
+frontend $DOMAIN_NAME-frontend
     bind *:80
-    default_backend webservers
+    default_backend $DOMAIN_NAME-backend
 
-backend webservers
+backend $DOMAIN_NAME-backend
     balance roundrobin
     server web-01 483-web-01:80 check
     server web-02 483-web-02:80 check
 EOF
 
-# Step 3: Configure HAProxy init script
-sudo tee /etc/init.d/haproxy > /dev/null <<EOF
-#!/bin/sh
-### BEGIN INIT INFO
-# Provides:          haproxy
-# Required-Start:    \$local_fs \$network \$syslog
-# Required-Stop:     \$local_fs \$network \$syslog
-# Default-Start:     2 3 4 5
-# Default-Stop:      0 1 6
-# Short-Description: HAProxy for 2 servers (ALX)
-### END INIT INFO
-
-PATH=/sbin:/usr/sbin:/bin:/usr/bin
-DAEMON=/usr/sbin/haproxy
-NAME=haproxy
-DESC=HAProxy
-
-test -x \$DAEMON || exit 0
-
-# Include HAProxy defaults if available
-if [ -f /etc/default/haproxy ] ; then
-   . /etc/default/haproxy
-fi
-
-set -e
-
-case "\$1" in
-start)
-   echo -n "Starting \$DESC: "
-   \$DAEMON -f /etc/haproxy/haproxy.cfg -D -p /var/run/\$NAME.pid
-   echo "\$NAME."
-   ;;
-stop)
-   echo -n "Stopping \$DESC: "
-   killall -s QUIT \$NAME
-   echo "\$NAME."
-   ;;
-restart|force-reload)
-   echo -n "Restarting \$DESC: "
-   killall -s HUP \$NAME
-   sleep 1
-   \$DAEMON -f /etc/haproxy/haproxy.cfg -D -p /var/run/\$NAME.pid
-   echo "\$NAME."
-   ;;
-reload)
-   echo -n "Reloading \$DESC configuration: "
-   killall -s HUP \$NAME
-   echo "\$NAME."
-   ;;
-*)
-   N=/etc/init.d/\$NAME
-   echo "Usage: \$N {start|stop|restart|reload|force-reload}" >&2
-   exit 1
-   ;;
-esac
-
-exit 0
+# Step 3: Configure HAProxy to start on boot
+sudo tee -a /etc/default/haproxy > /dev/null <<EOF
+ENABLED=1
 EOF
 
-# Step 4: Start HAProxy and enable it to start on boot
+# Step 4: Start HAProxy
 sudo service haproxy start
-sudo update-rc.d haproxy defaults
