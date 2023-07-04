@@ -41,7 +41,7 @@ file { '/var/www/html/404.html':
 # add redirection and error page
 file { 'Nginx default config file':
   ensure  => file,
-  path    => '/etc/nginx/sites-enabled/default',
+  path    => '/etc/nginx/sites-available/default',
   content =>
 "server {
         listen 80 default_server;
@@ -67,6 +67,18 @@ file { 'Nginx default config file':
 }
 ",
 }
+# remove all files (including symlinks) within the directory
+file { '/etc/nginx/sites-enabled':
+  ensure => directory,
+  purge  => true,
+  recurse => true,
+}
+# create a new symbolic link
+file { '/etc/nginx/sites-enabled/default':
+  ensure => link,
+  target => '/etc/nginx/sites-available/default',
+}
+
 # restart nginx
 exec { 'restart service':
   command => 'service nginx restart',
