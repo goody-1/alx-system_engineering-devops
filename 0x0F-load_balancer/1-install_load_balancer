@@ -19,8 +19,8 @@ frontend $DOMAIN_NAME-frontend
 
 backend $DOMAIN_NAME-backend
     balance roundrobin
-    server web-01 483-web-01:80 check
-    server web-02 483-web-02:80 check
+    server web-01 52.86.99.167:80 check
+    server web-02 34.202.157.74:80 check
 EOF
 
 # Step 3: Configure HAProxy to start on boot
