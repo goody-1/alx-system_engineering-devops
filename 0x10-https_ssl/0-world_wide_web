@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+# Script that performs audits, takes domain and subdomain arguments
+
+domain="$1"   # First argument: domain
+subdomain="$2"   # Second argument: subdomain
+
+# Function to retrieve DNS record information for a subdomain
+get_dns_record() {
+    local sub="$1"
+    local record_type="$2"
+    local result
+    result=$(dig +short "$sub.$domain" "$record_type" | awk '{print $0}')
+    echo "$result"
+}
+
+# Function to display DNS record information
+display_dns_info() {
+    local sub="$1"
+    local record_type="$2"
+    local destination
+    destination=$(get_dns_record "$sub" "$record_type")
+    echo "The subdomain $sub is a $record_type record and points to $destination"
+}
+
+# Check if the domain argument is provided
+if [ -z "$domain" ]; then
+    echo "Error: Domain argument is missing."
+    exit 1
+fi
+
+# Perform the audit for the specified subdomain or default subdomains
+if [ -n "$subdomain" ]; then
+    display_dns_info "$subdomain" "A"
+else
+    default_subdomains=("www" "lb-01" "web-01" "web-02")
+    for sub in "${default_subdomains[@]}"; do
+        display_dns_info "$sub" "A"
+    done
+fi
