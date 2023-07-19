@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# Check if the password argument is provided
+if [ -z "$1" ]; then
+  echo "Usage: $0 <mysql_password>"
+  exit 1
+fi
+
+# Set the date in the required format
+date_format=$(date +"%d-%m-%Y")
+
+# Create the MySQL dump
+mysqldump -u root -p"$1" --all-databases > backup.sql
+
+# Create the tar.gz archive with the dump
+tar -czvf "$date_format.tar.gz" backup.sql
