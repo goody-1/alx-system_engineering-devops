@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# run whoami command as another user
 
 # Check if an argument is provided
 if [ $# -ne 1 ]; then
