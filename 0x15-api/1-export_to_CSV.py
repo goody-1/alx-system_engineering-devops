@@ -28,7 +28,9 @@ if __name__ == "__main__":
         row["username"] = emp_uname
 
     with open(csv_file, mode="w", newline="") as file:
-        writer = csv.DictWriter(file, fieldnames=fields_to_include)
+        writer = csv.DictWriter(
+            file, fieldnames=fields_to_include, quoting=csv.QUOTE_ALL
+        )
         # writer.writeheader()
 
         for row in total_tasks:
