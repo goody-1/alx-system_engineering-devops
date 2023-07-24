@@ -17,4 +17,4 @@ if __name__ == "__main__":
 
     print(text)
     for task in done_tasks:
-        print(f"     {task.get('title')}")
+        print(f"\t {task.get('title')}")
