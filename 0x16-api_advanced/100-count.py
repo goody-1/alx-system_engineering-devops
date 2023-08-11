@@ -3,7 +3,6 @@
 Parses the title of all hot articles,\
  and prints a sorted count of given keywords
 """
-from collections import Counter
 
 import requests
 
@@ -17,11 +16,11 @@ def count_words(subreddit, word_list, after=None, counts=None):
         subreddit (str): The subreddit to query
         word_list (list): Doesn't have to be passed
         after (str): Doesn't have to be passed
-        count (int): Doesn't have to be passed
+        counts (dict): Doesn't have to be passed
     """
 
     if counts is None:
-        counts = Counter()
+        counts = {}
     try:
         url = f"https://www.reddit.com/r/{subreddit}/hot.json?limit=100"
 
@@ -50,7 +49,7 @@ def count_words(subreddit, word_list, after=None, counts=None):
                     if word_with_spaces in title_with_spaces:
                         # Count the occurrences of the keyword within the title
                         occurrences = title_with_spaces.count(word_with_spaces)
-                        counts[word] += occurrences
+                        counts[word] = counts.get(word, 0) + occurrences
 
             # Recursive call for next page
             new_after = data["data"]["after"]
