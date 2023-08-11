@@ -44,8 +44,9 @@ def count_words(subreddit, word_list, after=None, counts=None):
             for post in posts:
                 title = post["data"]["title"]
                 for word in word_list:
+                    word = word.lower()
                     title_with_spaces = f" {title.lower()} "
-                    word_with_spaces = f" {word.lower()} "
+                    word_with_spaces = f" {word} "
                     if word_with_spaces in title_with_spaces:
                         # Count the occurrences of the keyword within the title
                         occurrences = title_with_spaces.count(word_with_spaces)
