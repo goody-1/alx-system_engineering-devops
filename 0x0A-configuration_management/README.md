@@ -1,4 +1,5 @@
 # DevOps Configuration Management Project from ALX-SE
+`DevOps` &nbsp; `SysAdmin` &nbsp; `Scripting` &nbsp; `CI/CD`
 
 | Filename            | Description                                    | Type |
 | ------------------- | ---------------------------------------------- | ------ |
