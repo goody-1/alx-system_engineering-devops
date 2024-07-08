@@ -8,7 +8,7 @@ echo | sudo add-apt-repository ppa:vbernat/haproxy-2.8
 sudo apt-get install haproxy=2.8.\*
 sudo apt-get install -y haproxy
 
-DOMAIN_NAME='dhelped.tech'
+DOMAIN_NAME='dhelped.live'
 # Step 2: Configure HAProxy
 sudo mkdir -p /etc/haproxy
 sudo tee -a /etc/haproxy/haproxy.cfg > /dev/null <<EOF
@@ -19,8 +19,8 @@ frontend $DOMAIN_NAME-frontend
 
 backend $DOMAIN_NAME-backend
     balance roundrobin
-    server web-01 52.86.99.167:80 check
-    server web-02 34.202.157.74:80 check
+    server web-01 100.25.194.252:80 check
+    server web-02 3.94.213.134:80 check
 EOF
 
 # Step 3: Configure HAProxy to start on boot
