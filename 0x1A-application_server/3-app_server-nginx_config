@@ -1,0 +1,48 @@
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    server_name 107.23.46.106 _;
+
+    # tell which server is responding
+    add_header X-Served-By $hostname;
+
+    # Default root directory
+    root /var/www/html;
+        index index.html index.htm index.nginx-debian.html;
+
+    # Custom error page for 404
+    error_page 404 /404.html;
+    location /404.html {
+        internal;
+    }
+
+    # Serve static files from /web/static
+    location /web_static/ {
+        alias /data/web_static/current/;
+        index index.html index.html;
+    }
+
+    # Proxy requests to the /airbnb-onepage/ route
+    location /airbnb-onepage {
+        proxy_pass http://0.0.0.0:5000/airbnb-onepage/;
+    }
+
+    # Proxy requests to the /airbnb-dynamic/number_odd_or_even/(any_integer) route
+    location ~ ^/airbnb-onepage/airbnb-dynamic/number_odd_or_even/([0-9]+)$ {
+        proxy_pass http://0.0.0.0:5001/number_odd_or_even/$1;
+    }
+
+    location /hbnb_static {
+        alias /data/web_static/current/;
+    }
+
+    # Fallback for other requests
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    # Redirect specific requests
+    if ($request_filename ~ redirect_me){
+                rewrite ^ https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;
+        }
+}
