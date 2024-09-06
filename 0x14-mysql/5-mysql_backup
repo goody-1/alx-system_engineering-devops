@@ -10,7 +10,7 @@ fi
 date_format=$(date +"%d-%m-%Y")
 
 # Create the MySQL dump
-mysqldump -u root -p"$1" --all-databases > backup.sql
+sudo mysqldump -u root -p"$1" --all-databases > backup.sql
 
 # Create the tar.gz archive with the dump
 tar -czvf "$date_format.tar.gz" backup.sql
