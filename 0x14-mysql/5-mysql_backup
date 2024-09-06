@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Create a backup for MySQL database
 
 # Check if the password argument is provided
 if [ -z "$1" ]; then
